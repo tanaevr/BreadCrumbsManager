@@ -1,0 +1,33 @@
+<?php
+
+if ($modx->event->name == 'OnDocFormPrerender') {    
+	if (!$modx->controller->resourceArray) {
+		return;
+	}
+	$id = $modx->controller->resourceArray['id'];	
+	$resources = array();
+    foreach ($modx->getParentIds($id, 10, array('context' => 'web')) as $parentId) {
+		if ($parentId) array_push($resources, $parentId);		
+    }
+	natsort($resources);
+	$level = 0;
+    $childTemplates = '<a style="color: #333;" href="/manager/index.php">Панель</a> <span style="color: #333;">|</span> ';
+    foreach ($resources as $resourceId) {
+      $resource = $modx->getObject('modResource', $resourceId);     
+		$childTemplates .= '<a style="color: #333;" href="/manager/index.php?a=30&id='.$resource->get('id').'">'.$resource->get('pagetitle').'</a> <span style="color: #333;">|</span> ';
+      $level++; 
+    }
+
+	
+	$modx->controller->addHtml('
+	<script>'."
+		Ext.onReady(function() {		
+			var title = Ext.select('#modx-resource-header');
+			title.createChild('<p style=\"padding-bottom: 15px;\">$childTemplates</p>');
+		});</script>	
+	".'</script>');
+	
+	return;
+}
+
+?>
