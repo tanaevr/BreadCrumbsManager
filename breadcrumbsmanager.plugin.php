@@ -1,5 +1,4 @@
 <?php
-
 if ($modx->event->name == 'OnDocFormPrerender') {    
 	if (!$modx->controller->resourceArray) {
 		return;
@@ -23,11 +22,15 @@ if ($modx->event->name == 'OnDocFormPrerender') {
 	<script>'."
 		Ext.onReady(function() {		
 			var title = Ext.select('#modx-resource-header');
+			var pagetitle = Ext.select('#modx-resource-pagetitle');
+			
 			title.createChild('<p style=\"padding-bottom: 15px;\">$childTemplates</p>');
-		});</script>	
+			pagetitle.on('keyup', function(){
+				title.createChild('<p style=\"padding-bottom: 15px;\">$childTemplates</p>');
+			});			
+		});					
+		</script>	
 	".'</script>');
 	
 	return;
 }
-
-?>
