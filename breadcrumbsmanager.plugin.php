@@ -11,13 +11,13 @@ if ($modx->event->name == 'OnDocFormPrerender') {
     $resources[] = $id;
 	natsort($resources);
 	$level = 0;
-    $childTemplates = '<a style="color: #333;" href="/panel/index.php">Панель</a> <span style="color: #333;">|</span> ';
+    $childTemplates = '<a style="color: #333;" href="/manager/index.php">Панель</a> <span style="color: #333;">|</span> ';
     foreach ($resources as $resourceId) {
       $resource = $modx->getObject('modResource', $resourceId);
       if ($resourceId == $id) {
           $childTemplates .= '<span style="color: #333;">'.$resource->get('pagetitle').'</span>';
       } else {
-          $childTemplates .= '<a style="color: #333;" href="/panel/index.php?a=30&id='.$resource->get('id').'">'.$resource->get('pagetitle').'</a> <span style="color: #333;">|</span> ';
+          $childTemplates .= '<a style="color: #333;" href="/manager/index.php?a=30&id='.$resource->get('id').'">'.$resource->get('pagetitle').'</a> <span style="color: #333;">|</span> ';
       }
       $level++; 
     }
