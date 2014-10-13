@@ -1,6 +1,6 @@
 <?php
 if ($modx->event->name == 'OnDocFormPrerender') {    
-	if (!$modx->controller->resourceArray) {
+	if (!$modx->controller->resourceArray['id']) {
 		return;
 	}
 	$id = $modx->controller->resourceArray['id'];	
