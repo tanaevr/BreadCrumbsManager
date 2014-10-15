@@ -1,15 +1,22 @@
 <?php
 if ($modx->event->name == 'OnDocFormPrerender') {    
-	if (!$modx->controller->resourceArray['id']) {
+	if (!$id = $modx->controller->resourceArray['id']) {
 		return;
 	}
-	$id = $modx->controller->resourceArray['id'];	
 	$resources = array();
     foreach ($modx->getParentIds($id, 10, array('context' => 'web')) as $parentId) {
 		if ($parentId) array_push($resources, $parentId);		
-    }
-    $resources[] = $id;
+    }    
 	natsort($resources);
+	$resources[] = $id;
+	
+	$setting = $modx->getObject('modSystemSetting', 'settings_version');
+    $version = explode('.',$setting->get('value'));
+    $url = '/manager/index.php?a=30&id=';
+    if($version[1]==3){
+        $url = '?a=resource/update&id=';
+    }
+	
 	$level = 0;
     $childTemplates = '<a style="color: #333;" href="/manager/index.php">Панель</a> <span style="color: #333;">|</span> ';
     foreach ($resources as $resourceId) {
@@ -17,7 +24,7 @@ if ($modx->event->name == 'OnDocFormPrerender') {
       if ($resourceId == $id) {
           $childTemplates .= '<span style="color: #333;">'.$resource->get('pagetitle').'</span>';
       } else {
-          $childTemplates .= '<a style="color: #333;" href="/manager/index.php?a=30&id='.$resource->get('id').'">'.$resource->get('pagetitle').'</a> <span style="color: #333;">|</span> ';
+          $childTemplates .= '<a style="color: #333;" href="'.$url.$resource->get('id').'">'.$resource->get('pagetitle').'</a> <span style="color: #333;">|</span> ';
       }
       $level++; 
     }
