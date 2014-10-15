@@ -12,13 +12,13 @@ if ($modx->event->name == 'OnDocFormPrerender') {
 	
 	$setting = $modx->getObject('modSystemSetting', 'settings_version');
     $version = explode('.',$setting->get('value'));
-    $url = '/manager/index.php?a=30&id=';
+    $url = MODX_MANAGER_URL.'/manager/index.php?a=30&id=';
     if($version[1]==3){
-        $url = '?a=resource/update&id=';
+        $url = MODX_MANAGER_URL.'?a=resource/update&id=';
     }
 	
 	$level = 0;
-    $childTemplates = '<a style="color: #333;" href="/manager/index.php">Панель</a> <span style="color: #333;">|</span> ';
+    $childTemplates = '<a style="color: #333;" href="'.MODX_MANAGER_URL.'">Панель</a> <span style="color: #333;">|</span> ';
     foreach ($resources as $resourceId) {
       $resource = $modx->getObject('modResource', $resourceId);
       if ($resourceId == $id) {
