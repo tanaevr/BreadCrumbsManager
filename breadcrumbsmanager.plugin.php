@@ -13,7 +13,7 @@ if ($modx->event->name == 'OnDocFormPrerender') {
 	$setting = $modx->getObject('modSystemSetting', 'settings_version');
     $version = explode('.',$setting->get('value'));
     $url = MODX_MANAGER_URL.'/manager/index.php?a=30&id=';
-    if($version[1]==3){
+    if($version[1]>=3){
         $url = MODX_MANAGER_URL.'?a=resource/update&id=';
     }
 	
